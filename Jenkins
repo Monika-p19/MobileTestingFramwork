@@ -1,0 +1,55 @@
+pipeline {
+ 
+agent any
+ 
+tools {
+maven 'Maven'
+}
+ 
+stages {
+stage('Checkout') {
+steps {
+checkout scm
+}
+}
+ 
+stage('Build') {
+steps {
+bat 'mvn clean compile'
+}
+}
+ 
+stage('Test') {
+steps {
+bat 'mvn test'
+}
+}
+}
+ 
+post {
+success {
+emailext(
+to: 'monikap.kiaq@gmail.com',
+subject: "Jenkins SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+body: """Build completed successfully.
+ 
+Job: ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}
+"""
+)
+}
+ 
+failure {
+emailext(
+to: 'reshma.kkiaq@gmail.com',
+subject: "Jenkins FAILED - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+body: """Build failed.
+Job: ${env.JOB_NAME}
+Build Number: ${env.BUILD_NUMBER}
+Build URL: ${env.BUILD_URL}
+"""
+)
+}
+}
+}
