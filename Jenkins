@@ -43,7 +43,7 @@ Build URL: ${env.BUILD_URL}
  
 failure {
 emailext(
-to: 'reshma.kkiaq@gmail.com',
+to: 'monikap.kiaq@gmail.com',
 subject: "Jenkins FAILED - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
 body: """Build failed.
 Job: ${env.JOB_NAME}
